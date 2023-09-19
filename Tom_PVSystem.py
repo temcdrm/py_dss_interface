@@ -10,7 +10,7 @@ import pathlib
 import os
 
 # Using the OpenDSS repository
-dss = py_dss_interface.DSS("C:\src\OpenDSS\Version8\Source")
+#dss = py_dss_interface.DSS("C:\src\OpenDSS\Version8\Source")
 dss = py_dss_interface.DSS()
 
 dss.text("set DefaultBaseFrequency=60")

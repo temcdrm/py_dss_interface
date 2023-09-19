@@ -8,6 +8,7 @@
 import pytest
 import platform
 
+ROUND = 10 # 20 for Delphi build
 
 class TestBus13Bus:
 
@@ -166,13 +167,13 @@ class TestBus13Bus:
             expected = [2350.0787629180386, -221.07964093085243, -1338.4031344410694, -2109.8005600677147,
                         -1015.4071496666263, 2083.115713199055]
             actual = dss.bus.voltages
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_seq_voltages(self, dss):
         if platform.architecture()[0] == "64bit":
             expected = [82.59752865884842, 2391.5781244654136, 42.2125249966211]
             actual = dss.bus.seq_voltages
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_nodes(self, dss):
         expected = [1, 2, 3]
@@ -185,7 +186,7 @@ class TestBus13Bus:
             expected = [-1015.4300936882696, 2083.1333886098464, 2350.084451419252, -221.06489668658924,
                         -1338.4058896357694, -2109.7912876883593]
             actual = dss.bus.voc
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_isc(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -193,14 +194,14 @@ class TestBus13Bus:
             expected = [3152.0299371281603, 3631.3058759243054, 2198.661801411833, -5249.483826338779,
                         -5239.348623560714, 1851.7201039001266]
             actual = dss.bus.isc
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_pu_voltages(self, dss):
         if platform.architecture()[0] == "64bit":
             expected = [0.9784749565294848, -0.09204835832002893, -0.5572553437166756, -0.8784331163159987,
                         -0.4227732628825221, 0.8673226570446733]
             actual = dss.bus.pu_voltages
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_zsc_matrix(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -224,21 +225,21 @@ class TestBus13Bus:
                         0.2982018705768556,
                         0.7564753107317581]
             actual = dss.bus.zsc_matrix
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_zsc1(self, dss):
         if platform.architecture()[0] == "64bit":
             dss.text("solve mode=faultstudy")
             expected = [0.16118779073342565, 0.42342339346722063]
             actual = dss.bus.zsc1
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_zsc0(self, dss):
         if platform.architecture()[0] == "64bit":
             dss.text("solve mode=faultstudy")
             expected = [0.6113010201571722, 1.3170783169496814]
             actual = dss.bus.zsc0
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_ysc_matrix(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -262,7 +263,7 @@ class TestBus13Bus:
                         0.5768761487247634,
                         -1.5739302565597302]
             actual = dss.bus.ysc_matrix
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_cplx_sequence_voltages(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -273,7 +274,7 @@ class TestBus13Bus:
                         -34.729368969132395,
                         23.995170297295772]
             actual = dss.bus.cplx_sequence_voltages
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_vll(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -284,7 +285,7 @@ class TestBus13Bus:
                         -3365.485912584665,
                         2304.195354129907]
             actual = dss.bus.vll
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_pu_vll(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -295,7 +296,7 @@ class TestBus13Bus:
                         -0.8090110366790061,
                         0.5538931139735354]
             actual = dss.bus.pu_vll
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_vmag_angle(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -306,7 +307,7 @@ class TestBus13Bus:
                         2317.4172594012734,
                         115.98674983388848]
             actual = dss.bus.vmag_angle
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_pu_vmag_angle(self, dss):
         if platform.architecture()[0] == "64bit":
@@ -317,7 +318,7 @@ class TestBus13Bus:
                         0.9648760662548149,
                         115.98674983388848]
             actual = dss.bus.vmag_angle_pu
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_line_list(self, dss):
         expected = ['LINE.692675', 'LINE.671692']
@@ -351,7 +352,7 @@ class TestBus13Bus:
                         0.161187790758672,
                         0.4234233934675475]
             actual = dss.bus.axc_012_matrix
-            assert [round(value, 20) for value in actual] == [round(value, 20) for value in expected]
+            assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     def test_all_pce_active_bus(self, dss):
         expected = ['Load.692']

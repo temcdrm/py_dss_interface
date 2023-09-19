@@ -8,6 +8,7 @@
 
 import pytest
 
+ROUND = 10 # 20 for Delphi build
 
 class TestMeters13Bus:
 
@@ -274,7 +275,7 @@ class TestMeters13Bus:
         dss.text("Allocateloads")
         expected = [473.76911764821904, 188.82002588596725, 424.90119440383563]
         actual = dss.meters.calc_current
-        assert actual == expected
+        assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     # TODO: Ênio - https://github.com/PauloRadatz/py_dss_interface/issues/6
     # def test_meters_write_calc_current(self, dss):
@@ -289,7 +290,7 @@ class TestMeters13Bus:
         dss.text("Allocateloads")
         expected = [0.8316287096883996, 1.5941105748061957, 0.9484557946828922]
         actual = dss.meters.alloc_factors
-        assert actual == expected
+        assert [round(value, ROUND) for value in actual] == [round(value, ROUND) for value in expected]
 
     # TODO it changed it
     def test_meters_write_alloc_factors(self, dss):

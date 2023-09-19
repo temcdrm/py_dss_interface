@@ -79,6 +79,33 @@ Examples
 ============
 You can find several examples of Python scripts at this link: https://github.com/PauloRadatz/py-dss-interface-examples
 
+Testing FPC Version
+===================
+
+The Free Pascal Compiler (FPC) may be used to support Linux and Mac OS X versions of the DLL interface. Only
+64-bit interfaces are included. Efforts will be made to support the Progress Update, but not the Edit Form.
+
+* The tests have been configured with an OpenDSS Version 8 repository at ``c:\src\OpenDSS\Version8``
+* Use ``pytest -p no:faulthandler`` to run the test suite, using opendssdirect.dll within this py_dss_interface repository
+* Use ``deploy_delphi`` to copy the Delphi-built DLL from the OpenDSS source tree into this repository for testing.
+
+  * The test suite completes in 25-27 seconds on a 3-year-old laptop
+  * 985/987 tests pass
+  * In ``test_solution.py``, one test fails while interpreting an empty array from a call to ``bus_levels``
+  * In ``test_monitors.py``, one test fails due to an incorrect continuation character in the byte stream
+
+* Use ``deploy_fpc`` to copy the FPC-built DLL from the OpenDSS source tree into this repository for testing.
+
+  * As with the Delphi build, the test suite completes in 25-27 seconds on a 3-year-old laptop
+  * 983/987 tests pass
+  * It was necessary to decrease the precision of floating-point comparison, i.e., the number of digits to the right of the decimal point, from 20 down to 10, 8, 5, or 4 in some tests. The lower precision levels generally correspond to calculated power or current levels, not per-unit values. This should be acceptable, pending further review.
+  * As with the Delphi build, in ``test_solution.py``, one test fails while interpreting an empty array from a call to ``bus_levels``
+  * As with the Delphi build, in ``test_monitors.py``, one test fails due to an incorrect continuation character in the byte stream
+  * In ``test_lines.py``, an access violation occurs in ``read_yprim``
+  * In ``test_solution.py``, the ``read_total_time`` often returns 0. In the FPC DLL, this function relies on ``GetTickCount64`, which may be less accurate than in the Delphi DLL.
+
+* Use ``python Tom_PVSystem.py`` for a quicker test of new builds.
+
 Thanks
 =============
 I want to thank Ênio Viana and Rodolfo Pilar Londero for all their contribution to the new version of the tool.

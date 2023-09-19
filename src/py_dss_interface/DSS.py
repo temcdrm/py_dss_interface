@@ -120,8 +120,10 @@ class DSS:
             exit()
 
     def __check_started(self):
+        #print ('__check_started')
+        #print ('  ', hex(self._dss_obj.DSSI(ctypes.c_int32(3), ctypes.c_int32(0))))
         if int(self._dss_obj.DSSI(ctypes.c_int32(3), ctypes.c_int32(0))) != 1:
-            return False
+            return False # pass # for debugging DLL startup
         # TODO: Need refactor this call to use a method that already exists
         self._my_dss_version = ctypes.c_char_p(self._dss_obj.DSSS(ctypes.c_int32(1), "".encode('ascii')))
         return True
@@ -143,5 +145,7 @@ class DSS:
         self._dss_obj.DSSPut_Command.restype = ctypes.c_char_p
         self._dss_obj.DSSProperties.restype = ctypes.c_char_p
 
+        #print ('__allocate_memory')
         for i in self.__memory_commands:
+            #print ('  ', i)
             exec(i)
