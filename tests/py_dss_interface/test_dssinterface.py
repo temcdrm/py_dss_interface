@@ -83,18 +83,18 @@ class TestDSSInterface13Bus:
     #     assert actual == expected
 
     def test_dss_read_datapath(self, dss):
-        expected = r"C:\\PauloRadatz\\GitHub\\py-dss-interface\\tests\\py_dss_interface\\cases\\13Bus\\"
+        expected = r"C:\\src\\py_dss_interface\\tests\\py_dss_interface\\cases\\13Bus\\"
         actual = dss.dssinterface.datapath
-        assert actual.replace("\\", "").split("py-dss-interfacetests")[1] == \
-               expected.replace("\\", "").split("py-dss-interfacetests")[1]
+        assert actual.replace("\\", "").split("py_dss_interfacetests")[1] == \
+               expected.replace("\\", "").split("py_dss_interfacetests")[1]
 
     def test_dss_write_datapath(self, dss):
         data_path = str(pathlib.Path(os.path.dirname(__file__)).joinpath("cases", "13Bus", "datapath"))
         dss.dssinterface.datapath = data_path
         expected = data_path
         actual = dss.dssinterface.datapath
-        assert actual.replace("\\", "").split("py-dss-interfacetests")[1] == \
-               expected.replace("\\", "").split("py-dss-interfacetests")[1]
+        assert actual.replace("\\", "").split("py_dss_interfacetests")[1] == \
+               expected.replace("\\", "").split("py_dss_interfacetests")[1]
 
     def test_dss_default_editor(self, dss):
         expected = 'Notepad.exe'

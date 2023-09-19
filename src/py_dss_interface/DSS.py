@@ -16,6 +16,7 @@ from .utils.Error import Error
 
 DLL_NAME_WIN = "OpenDSSDirect.dll"
 DLL_NAME_LINUX = "libopendssdirect.so"
+DLL_NAME_MACOSX = "libopendssdirect.dylib"
 
 
 class DSSDLL:

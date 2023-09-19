@@ -134,6 +134,8 @@ def pointer_read(f: callable, param: int, optional=None) -> List:
     array_length = int(mySize.value / num_type)
     # data_array = ctypes.cast(myPointer, ctypes.POINTER(ctypes.c_int * array_length)).contents
 
+    if not bool(myPointer):
+        return []
     data_array = ctypes.cast(myPointer, ctypes.POINTER(c_type * array_length)).contents
 
     # Convert the data_array to a Python list
