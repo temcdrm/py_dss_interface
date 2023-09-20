@@ -16,7 +16,7 @@ from .utils.Error import Error
 
 DLL_NAME_WIN = "OpenDSSDirect.dll"
 DLL_NAME_LINUX = "libopendssdirect.so"
-DLL_NAME_MACOSX = "libopendssdirect.dylib"
+DLL_NAME_DARWIN = "libopendssdirect.dylib"
 
 
 class DSSDLL:
@@ -49,13 +49,16 @@ class DSS:
             if not dll_folder_param:
                 dll_folder_param = os.path.join(pathlib.Path(os.path.dirname(os.path.abspath(__file__))), "dll")
             if System.detect_platform() == 'Linux':
-                Error.linux_version()
-                raise
-                # dll_folder_param = pathlib.Path(dll_folder_param)
-                # dll_by_user = DLL_NAME_LINUX
+                #Error.linux_version()
+                #raise
+                dll_folder_param = pathlib.Path(dll_folder_param)
+                dll_by_user = DLL_NAME_LINUX
             elif System.detect_platform() == 'Windows':
                 dll_folder_param = pathlib.Path(dll_folder_param)
                 dll_by_user = DLL_NAME_WIN
+            elif System.detect_platform() == 'Darwin':
+                dll_folder_param = pathlib.Path(dll_folder_param)
+                dll_by_user = DLL_NAME_DARWIN
 
             self._dll_path = System.get_architecture_path(dll_folder_param)
             self.dll_file_path = os.path.join(self._dll_path, dll_by_user)
@@ -116,7 +119,7 @@ class DSS:
                 print("OpenDSS Failed to Start")
                 exit()
         else:
-            print("An error occur!")
+            print("An error occured!")
             exit()
 
     def __check_started(self):
