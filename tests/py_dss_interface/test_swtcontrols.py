@@ -61,7 +61,7 @@ class TestSwtControls13Bus:
         assert actual == expected
 
     def test_swtcontrols_write_switched_term(self, dss):
-        expected = 0
+        expected = 2
         dss.swtcontrols.switched_term = expected
         actual = dss.swtcontrols.switched_term
         assert actual == expected

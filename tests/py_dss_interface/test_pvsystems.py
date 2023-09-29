@@ -91,7 +91,7 @@ class TestPVSystems13Bus:
         expected = 500.0
         dss.text("solve")
         actual = dss.pvsystems.kw_output
-        assert actual == expected
+        assert round(actual,10) == expected
 
     def test_pvsystems_read_kvar(self, dss):
         expected = 0

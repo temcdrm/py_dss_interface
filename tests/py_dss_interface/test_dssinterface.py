@@ -8,6 +8,7 @@
 
 import os
 import pathlib
+import platform
 
 import pytest
 
@@ -83,21 +84,36 @@ class TestDSSInterface13Bus:
     #     assert actual == expected
 
     def test_dss_read_datapath(self, dss):
-        expected = r"C:\\src\\py_dss_interface\\tests\\py_dss_interface\\cases\\13Bus\\"
+        if platform.system() == 'Windows':
+            expected = r"C:\\src\\py_dss_interface\\tests\\py_dss_interface\\cases\\13Bus\\"
+            delim = "\\"
+        else:
+            expected = r"/home/tom/src//py_dss_interface/tests/py_dss_interface/cases/13Bus/"
+            delim = "/"
         actual = dss.dssinterface.datapath
-        assert actual.replace("\\", "").split("py_dss_interfacetests")[1] == \
-               expected.replace("\\", "").split("py_dss_interfacetests")[1]
+        assert actual.replace(delim, "").split("py_dss_interfacetests")[1] == \
+            expected.replace(delim, "").split("py_dss_interfacetests")[1]
 
     def test_dss_write_datapath(self, dss):
+        if platform.system() == 'Windows':
+            delim = "\\"
+        else:
+            delim = "/"
         data_path = str(pathlib.Path(os.path.dirname(__file__)).joinpath("cases", "13Bus", "datapath"))
+        print (data_path)
         dss.dssinterface.datapath = data_path
         expected = data_path
         actual = dss.dssinterface.datapath
-        assert actual.replace("\\", "").split("py_dss_interfacetests")[1] == \
-               expected.replace("\\", "").split("py_dss_interfacetests")[1]
+        assert actual.replace(delim, "").split("py_dss_interfacetests")[1] == \
+               expected.replace(delim, "").split("py_dss_interfacetests")[1]
 
     def test_dss_default_editor(self, dss):
-        expected = 'Notepad.exe'
+        if platform.system() == 'Windows':
+            expected = 'Notepad.exe'
+        elif platform.system() == 'Linux':
+            expected = 'xdg-open'
+        else:
+            expected = '?'
         actual = dss.dssinterface.default_editor
         assert actual == expected
 
