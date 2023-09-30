@@ -49,8 +49,6 @@ class DSS:
             if not dll_folder_param:
                 dll_folder_param = os.path.join(pathlib.Path(os.path.dirname(os.path.abspath(__file__))), "dll")
             if System.detect_platform() == 'Linux':
-                #Error.linux_version()
-                #raise
                 dll_folder_param = pathlib.Path(dll_folder_param)
                 dll_by_user = DLL_NAME_LINUX
             elif System.detect_platform() == 'Windows':
