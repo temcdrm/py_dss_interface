@@ -10,10 +10,11 @@ from enum import Enum
 from typing import List, Union
 
 import numpy as np
-try:
-    from comtypes import automation
-except:
-    print("Error in importing ctypes")
+if sys.platform == 'win32':
+    try:
+        from comtypes import automation
+    except:
+        print('\nCOM automation is not supported on this platform.\nvariant_pointer_read and variant_pointer_write functions will not work.\n')
 
 
 logger = logging.getLogger('opendssdirect.core')
