@@ -4,13 +4,13 @@ __pycache__
 env
 
 # C extensions
-*.so
 # OpenDSS
 *.DSV
 *.dbl
 # Results Generated in Text File
-tests/py_dss_interface/case/13Bus/*.csv
-tests/py_dss_interface/case/13Bus/*.txt
+tests/py_dss_interface/cases/13Bus/*.csv
+tests/py_dss_interface/cases/13Bus/*.CSV
+tests/py_dss_interface/cases/13Bus/*.txt
 
 # Packages
 *.egg
