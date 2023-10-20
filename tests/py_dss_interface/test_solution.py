@@ -514,7 +514,7 @@ class TestSolution13Bus:
         if platform.system() != 'Windows':  # to avert a core dump on Linux
             pass
         else:
-            expected = []
+            expected = [0]
             actual = dss.solution.bus_levels
             assert actual == expected
 

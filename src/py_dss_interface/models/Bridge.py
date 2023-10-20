@@ -27,15 +27,15 @@ def is_x64() -> bool:
     return struct.calcsize("P") == 8
 
 
-def is_delphi() -> bool:
+def is_windows() -> bool:
     """
-    Returns True if the system is running Delphi, False otherwise.
+    Returns True if the system is running Delphi (or FPC) on Windows, False otherwise.
     """
     return 'darwin' not in sys.platform and 'linux' not in sys.platform
 
 
 POINTER = ctypes.c_int64 if is_x64() else ctypes.c_int32
-HEADER_SIZE = 4 if is_delphi() else 8
+HEADER_SIZE = 4 if is_windows() else 8
 
 
 class VArg(ctypes.Structure):
@@ -128,7 +128,10 @@ def pointer_read(f: callable, param: int, optional=None) -> List:
     elif myType.value == 3:
         c_type = ctypes.c_double
         num_type = 8
-    elif myType.value == 4:
+    elif myType.value == 4:  # string
+        c_type = ctypes.c_char
+        num_type = 1
+    elif myType.value == 5:  # byte stream
         c_type = ctypes.c_char
         num_type = 1
     # Access the returned array
@@ -141,7 +144,7 @@ def pointer_read(f: callable, param: int, optional=None) -> List:
 
     # Convert the data_array to a Python list
     if myType.value == 4:
-        python_list = list(data_array.raw.decode().replace('\x00', '__SPLITHERE__').split('__SPLITHERE__')[:])
+        python_list = list(data_array.raw.decode('utf-8').replace('\x00', '__SPLITHERE__').split('__SPLITHERE__')[:])
         while "" in python_list:
             python_list.remove("")
     else:
