@@ -60,7 +60,6 @@ class DSS:
 
             self._dll_path = System.get_architecture_path(dll_folder_param)
             self.dll_file_path = os.path.join(self._dll_path, dll_by_user)
-            print (self.dll_file_path)
             self._dss_obj = ctypes.cdll.LoadLibrary(self.dll_file_path)
 
         self.started = bool(self._dss_obj)

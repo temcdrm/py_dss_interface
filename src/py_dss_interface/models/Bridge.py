@@ -117,7 +117,7 @@ def pointer_read(f: callable, param: int, optional=None) -> List:
         ctypes.byref(mySize)
     )
 
-    # 0 - Boolean, 1- Integer (32 bit), 2- double (64 bit), 3- Complex, 4- String.
+    # 0 - Boolean, 1- Integer (32 bit), 2- double (64 bit), 3- Complex, 4- String, 5-byte stream.
     num_type = 0
     if myType.value == 1:
         c_type = ctypes.c_int32
