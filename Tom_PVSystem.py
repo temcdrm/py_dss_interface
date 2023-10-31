@@ -8,19 +8,23 @@
 import py_dss_interface
 import pathlib
 import os
+import cProfile
+import pstats
+from pstats import SortKey
 
-# Using the OpenDSS repository
-#dss = py_dss_interface.DSS("C:\src\OpenDSS\Version8\Source")
-dss = py_dss_interface.DSS()
+def test_dss():
+  # Using the OpenDSS repository
+  #dss = py_dss_interface.DSS("C:\src\OpenDSS\Version8\Source")
+  dss = py_dss_interface.DSS()
 
-dss.text("set DefaultBaseFrequency=60")
-script_path = os.path.dirname(os.path.abspath(__file__))
-dss13_path = os.path.join(pathlib.Path(script_path), "tests", "py_dss_interface", "cases", "13Bus", "IEEE13Nodeckt.dss")
-dss.text(f"compile {dss13_path}")
+  dss.text("set DefaultBaseFrequency=60")
+  script_path = os.path.dirname(os.path.abspath(__file__))
+  dss13_path = os.path.join(pathlib.Path(script_path), "tests", "py_dss_interface", "cases", "13Bus", "IEEE13Nodeckt.dss")
+  dss.text(f"compile {dss13_path}")
 
-dss.text(r"New XYCurve.MyPvsT npts=4  xarray=[0  25  75  100]  yarray=[1 1 1 1]")
-dss.text(r"New XYCurve.MyEff npts=4  xarray=[.1  .2  .4  1.0]  yarray=[1 1 1 1]")
-dss.text(r"New PVSystem.PV1 phases=3 "
+  dss.text(r"New XYCurve.MyPvsT npts=4  xarray=[0  25  75  100]  yarray=[1 1 1 1]")
+  dss.text(r"New XYCurve.MyEff npts=4  xarray=[.1  .2  .4  1.0]  yarray=[1 1 1 1]")
+  dss.text(r"New PVSystem.PV1 phases=3 "
          r"bus1=680 "
          r"kV=4.16  "
          r"kVA=600  "
@@ -33,6 +37,12 @@ dss.text(r"New PVSystem.PV1 phases=3 "
          r"effcurve=Myeff  "
          r"P-TCurve=MyPvsT")
 
-dss.text("solve")
+  dss.text("solve")
 
-print(dss.pvsystems.names)
+  print(dss.pvsystems.names)
+
+if __name__ == '__main__':
+  cProfile.run('test_dss()', 'restats')
+  p = pstats.Stats('restats')
+  p.strip_dirs().sort_stats(SortKey.CUMULATIVE).print_stats(50)
+
